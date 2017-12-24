@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>655-长孙皇后出手，直接吊死禄东赞</title>
+		<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="/css/section.css" rel="stylesheet"/>
+		<link href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+    	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    	<script>
+    		$(function () {
+				$("#bt_huyan").click(function(){
+					$("#div_body").attr("style", "background-color: rgb(199,237,204);")
+					$("#img_logo").attr("src","/img/huyan.png")
+					$("#content_font").attr("color","black")
+				});
+				$("#bt_guandeng").click(function(){
+					$("#div_body").attr("style", "background-color: rgb(0,0,0);")
+					$("#img_logo").attr("src","/img/guandeng.png")
+					$("#content_font").attr("color","darkgray")
+				});
+				$("#bt_kaideng").click(function(){
+					$("#div_body").removeAttr("style")
+					$("#img_logo").attr("src","/img/kaideng.png")
+					$("#content_font").attr("color","black")
+				});
+			})
+    	</script>
+	</head>
+	<body>
+	
+		<div id="div_body" class="container-fluid" >
+			<div class="row" style="height: auto;">
+		        <div class="col-md-2" style="background: border-box;">
+		        </div>
+		        <div class="col-md-8">
+		        	<div class="row">
+		        		<div class="col-md-4 float_left" style="height: 70px;">
+				        	<font size="7" class="float_left" style="font-family:LiSu,serif"><img id="img_logo" src="/img/kaideng.png" height="50" width="50"/>飞马追书</font>
+				        </div>
+				        <div class="col-md-4 float_right">
+				        	<!--<div class="row" style="height: 20px;">
+				        		<font class="float_right" style="margin-right: 4px;">当前用户：测试&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">退出</a></font>
+				        	</div>-->
+				        	<div class="row" style="height: 50px;">
+				        		<div class="float_right" style="margin-right: 0px; margin-top: 20px;">
+									<form class="form-search">
+										<input  type="text" placeholder="请输入书名" style="height: 32px; width: 180px; border: 1px solid cadetblue;"/> 
+										<button type="submit" class="btn" style="background-color: #2964BB;">查找</button>
+									</form>
+								</div>
+				        	</div>
+				        </div>
+				        
+				    </div>
+				    <div class="row">
+				        <div class="col-md-6">
+				        	<div class="float_left" style="margin-top: 5px;">
+					        	<font size="4" >
+					        		<a id="home_page" href="/book/bookstorage">首页</a>&ensp;|&nbsp;
+					        		<a id="bookrack" href="/book/bookrack">我的书架</a>
+					        	</font>
+				        	</div>
+				        </div>
+				        <div class="col-md-6">
+				        	<div class="float_right" style="margin-top: 0px;">
+				        		<button id="bt_kaideng" class="b_bt">开灯</button>&emsp;<button id="bt_guandeng" class="b_bt">关灯</button>&emsp;<button id="bt_huyan" class="b_bt">护眼</button>
+				        	</div>
+				        </div>
+				    </div>
+				    <div class="row" style="height: 70px;">
+				        <div class="col-md-12" align="center" style="position: absolute; margin-top: 10px;">
+				        	<font size="7">655-长孙皇后出手，直接吊死禄东赞</font>
+				        </div>
+				    </div>
+				    <div class="row" style="height: 40px;">
+				        <div class="col-md-12" style="margin-top: 15px" align="center">
+				        	<a id="top_last_section" href="#">上一章</a>&nbsp;&nbsp;
+				        	<a id="top_next_section" href="#">下一章</a>&nbsp;&nbsp;
+				        	<a id="top_a_catalog" href="/book/sectionList/102">目录</a>&nbsp;&nbsp;
+				        	<a id="top_a_lable" href="/book/markSite/84">加入书签</a>
+				        </div>
+				    </div>
+				    <div class="row">
+				        <div class="col-md-12">
+				        	<br />
+				        	<font id="content_font" color="#000000" face="微软雅黑">
+				        		<div id="content">
+									测试内容
+								<br />
+				        	</font>
+				        	
+				        </div>
+				    </div>
+				    <div class="row" style="height: 30px;" align="center">
+				        <div class="col-md-12" align="center">
+				        	<a id="bot_last_section" href="#">上一章</a>&nbsp;&nbsp;
+				        	<a id="bot_next_section" href="#">下一章</a>&nbsp;&nbsp;
+				        	<a id="bot_a_catalog" href="/book/sectionList/102">目录</a>&nbsp;&nbsp;
+				        	<a id="bot_a_lable" href="/book/markSite/84">加入书签</a>
+				        </div>
+				    </div>
+				    <div class="row" style="height: 40px;">
+				        <div class="col-md-12" align="center">
+				        	<a href="http://120.55.63.232/">www.fmzs365.cn</a>&nbsp;|&nbsp;<nb></nb><a href="http://120.55.63.232/">飞马追书</a><br />
+				        </div>
+				    </div>
+		        </div>
+		        <div class="col-md-2"></div>
+		    </div>
+		</div>
+	</body>
+</html>

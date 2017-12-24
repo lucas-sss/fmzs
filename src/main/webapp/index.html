@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>我的书架</title>
+		<link href="../css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="../css/section.css" rel="stylesheet"/>
+		<link href="../css/bootstrap-theme.min.css" rel="stylesheet"/>
+		<script type="text/javascript" src="../js/jquery-1.8.3.js"></script>
+    	<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    	<style type="text/css">
+    		table{
+	            width: 95%;
+				border-radius: 20px;
+	            border: 2px solid #92B8B1;
+	            border-collapse:collapse;
+	            border-spacing:1px;
+	        }
+    		table td{
+	            padding:5px;
+	            border: 1px solid #92B8B1;
+	        }
+			table th{
+				padding:5px;
+				border: 1px solid #92B8B1;
+			}
+    	</style>
+    	<script>
+    		$(function(){
+    			var bookrcklisthtml = '<tr><td colspan="6" align="center">我的书架</td>'+
+						'</tr>'+
+						'<tr>'+
+						'<th width="200">书名</th>'+
+						'<th width="200">作者</th>'+
+						'<th width="600">阅读进度</th>'+
+						'<th width="600">最新章节</th>'+
+						'<th width="150">是否完结</th>'+
+						'<th width="80">追书</th>'+
+						'</tr>';
+    			
+    			$("#search").click(function(){
+    				
+    				$("#bookrackdiv").addClass("hidden")
+    			})
+    			$("#search_div").mouseleave(function(event){
+    				/*event.stopPropagation();*/
+    				$("#bookrackdiv").removeClass("hidden")
+    				return false;
+    			});
+
+				$("#bt_index").click(function(){
+					$("#div_index").addClass("hidden")
+					$("#div_bookrack").removeClass("hidden")
+					$("#div_booklist").removeClass("hidden")
+					$("#bookrackdiv").addClass("hidden")
+				});
+				/*点击我的书架隐藏本身*/
+				$("#bt_bookrack").click(function(){
+					$("#div_index").removeClass("hidden")
+					$("#div_bookrack").addClass("hidden");
+					$("#div_booklist").addClass("hidden")
+					$("#bookrackdiv").removeClass("hidden")
+					/** 提交表单 **/
+
+					$.post("/book/bookrack",{"userId":"123456"},function (data){
+						var html = bookrcklisthtml;
+						var info = JSON.parse(data);
+						$(info).each(function(){
+							var bookName = this.book.name;
+							var bookRootPath = this.book.rootPath;
+							var bookAuthor = this.book.author;
+							var position = this.position;
+							var postionPath = this.positionPath;
+							if ("-1"==position){
+								position = "未阅读";
+								postionPath = "#";
+							}
+							var newSectionName = this.book.newSection;
+							var newSectionPath = this.book.newSectionPath;
+							var bookStatus = this.book.status;
+							if("1"==bookStatus){
+								bookStatus="已完结";
+							}else {
+								bookStatus="连载中";
+							}
+							var postion = this.position;
+							html +=  '<tr><td ><a href="'+bookRootPath+'" target="_blank">'+bookName+'</a></td><td >'+bookAuthor+'</td><td ><a href="'+postionPath+'">'+position+'</a> </td><td ><a href="'+newSectionPath+'">'+newSectionName+'</a> </td><td >'+bookStatus+'</td><td align="center"><input type="checkbox" checked="checked"/></td></tr>'
+						});
+						$("#table_bookracklist").html(html);
+					})
+				});
+
+    		})
+    	</script>
+	</head>
+	<body>
+	
+		<div id="div_body" class="container-fluid" >
+			<div class="row" style="height: auto;">
+		        <div class="col-md-2" style="background: border-box;">
+		        </div>
+		        <div class="col-md-8">
+		        	<div class="row">
+		        		<div class="col-md-4 float_left" style="height: 70px;">
+				        	<font size="7" class="float_left" style="font-family:LiSu"><img id="img_logo" src="../img/kaideng.png" height="50" width="50"/>飞马追书</font>
+				        </div>
+				        <div class="col-md-4 float_right">
+				        	<div class="row" style="height: 20px; margin-top: 5px;">
+				        		<font class="float_right" style="margin-right: 4px;">当前用户：测试&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#">退出</a></font>
+				        	</div>
+				        	
+				        </div>
+				        
+				    </div>
+				    <div id="search_div" class="row" style="height: 100px;">
+		        		<div align="center" style="margin-right: 0px; margin-top: 30px;">
+							<form class="form-search">
+								<input id="search"  type="text" placeholder="请输入书名" style="height: 32px; width: 400px; border: 1px solid cadetblue;"/> 
+								<button type="button" class="btn" style="background-color: cadetblue;">搜索</button>
+							</form>
+						</div>
+		        	</div>
+				   <div class="row">
+					   <div id="div_bookrack" class="col-md-2 float_left">
+						   <button id="bt_bookrack">我的书架</button>
+					   </div>
+					   <div id="div_index" class="col-md-2 float_left  hidden">
+						   <button id="bt_index">首页</button>
+					   </div>
+				   </div>
+				   <div class="row">
+					   <div id="div_booklist" style="position:relative;top: 10px;width: 100%;height: 500px;background-color:lightgray; border-radius: 15px;">
+						   <table align="center" border="1" style="font-family: '微软雅黑';font-size: large;" >
+							   <tr>
+								   <th width="200">书名</th>
+								   <th width="200">作者</th>
+								   <th width="500">最新章节</th>
+								   <th width="150">是否完结</th>
+								   <th width="150">加入书架</th>
+							   </tr>
+						   </table>
+					   </div>
+				   		<div id="bookrackdiv" class="hidden" style="position:relative;top: 10px;width: 100%;height: 500px;background-color:lightgray; border-radius: 15px;">
+							<table id="table_bookracklist" align="center">
+
+							</table>
+						</div>
+				   	
+				   	
+				   </div>
+		        </div>
+		        <div class="col-md-2"></div>
+		    </div>
+		</div>
+	</body>
+</html>

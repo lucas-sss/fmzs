@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="fmzs:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="fmzs.war">
+      <element id="artifact" artifact-name="fmzs:war exploded" />
+    </root>
+  </artifact>
+</component>

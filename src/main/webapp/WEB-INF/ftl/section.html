@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>${section.sectionName}</title>
+		<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+		<link href="/css/section.css" rel="stylesheet"/>
+		<link href="/css/adaptphone.css" rel="stylesheet"/>
+		<link href="/css/bootstrap-theme.min.css" rel="stylesheet"/>
+		<script type="text/javascript" src="/js/jquery-1.8.3.js"></script>
+    	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    	<script>
+    		$(function () {
+				$("#bt_huyan").click(function(){
+					$("#div_body").attr("style", "background-color: rgb(199,237,204);");
+					$("#img_logo").attr("src","/img/huyan.png");
+					$("#content_font").attr("color","black");
+					$("#readBg").attr("style",null);
+				});
+				$("#bt_guandeng").click(function(){
+					$("#div_body").attr("style", "background-color: rgb(0,0,0);");
+					$("#img_logo").attr("src","/img/guandeng.png");
+					$("#content_font").attr("color","darkgray");
+					$("#readBg").attr("style",null);
+				});
+				$("#bt_kaideng").click(function(){
+					$("#div_body").removeAttr("style");
+					$("#img_logo").attr("src","/img/kaideng.png");
+					$("#content_font").attr("color","black");
+					$("#readBg").attr("style","background: url('/img/book.jpg')");
+				});
+			})
+    	</script>
+	</head>
+	<body>
+	
+		<div id="div_body" class="container-fluid" >
+			<div class="row" style="height: auto;">
+		        <div class="col-md-2" style="background: border-box;">
+		        </div>
+		        <div class="col-md-8">
+		        	<div class="row">
+						<div class="col-md-4 float_left" style="height: 50px;">
+							<font id="font_logo" size="5" class="float_left" style="font-family:LiSu,serif"><img id="img_logo" src="/img/kaideng.png" height="40" width="40"/>飞马追书</font>
+						</div>
+						<div class="col-md-4 float_right">
+							<div id="div_bookrack_phone" class="col-md-4">
+								<div class="float_left" style="margin-top: 5px;margin-right: 0px">
+									<font size="3" >
+										<a href="/book/bookstorage/1">首页</a>|<a href="/book/bookrack">我的书架</a>
+									</font>
+								</div>
+							</div>
+							<div id="div_search" class="row" style="height: 50px;">
+								<div class="float_right" style="margin-right: 0px; margin-top: 20px;">
+									<form class="form-search">
+										<input  type="text" placeholder="请输入书名" style="height: 30px; width: 180px; border: 1px solid cadetblue;"/>
+										<button type="submit" class="btn-sm" style="background-color: #2964BB;">查找</button>
+									</form>
+								</div>
+							</div>
+						</div>
+				        
+				    </div>
+				    <div class="row">
+						<div id="div_bookrack_pc" class="col-md-6" >
+							<div class="float_left" style="margin-top: 5px;">
+								<font size="4" >
+									<a id="home_page" href="/book/bookstorage/1">首页</a>&ensp;|&nbsp;
+									<a id="bookrack" href="/book/bookrack">我的书架</a>
+								</font>
+							</div>
+						</div>
+						<div id="div_kaiguan" class="col-md-6">
+							<div class="float_right" style="margin-top: 0px;">
+								<button id="bt_kaideng" class="b_bt">开灯</button>&emsp;<button id="bt_guandeng" class="b_bt">关灯</button>&emsp;<button id="bt_huyan" class="b_bt">护眼</button>
+							</div>
+						</div>
+				    </div>
+				    <div class="row" style="height: 60px;">
+				        <div id="div_section_name" class="col-md-12" align="center" style="position: absolute; margin-top: 0px;">
+				        	<font id="font_section_name" size="5">${section.sectionName}</font>
+				        </div>
+				    </div>
+				    <div class="row" style="height: 25px;">
+				        <div class="col-md-12" style="margin-top: 5px" align="center">
+				        	<a id="top_last_section" href="/book/section/last/${current}">上一章</a>&nbsp;&nbsp;
+				        	<a id="top_next_section" href="/book/section/next/${current}">下一章</a>&nbsp;&nbsp;
+				        	<a id="top_a_catalog" href="/book/catalog/${book.id}">目录</a>&nbsp;&nbsp;
+				        	<a id="top_a_lable" href="#">加入书签</a>
+				        </div>
+				    </div>
+				    <div class="row">
+				        <div id="readBg" class="col-md-12" style="background: url('/img/book.jpg')">
+				        	<br />
+				        	<font id="content_font" color="#000000" face="微软雅黑" size="4">
+				        		<div id="content">
+									${section.sectionContent}
+								</div>
+				        	</font>
+				        </div>
+				    </div>
+				    <div class="row" style="height: 30px;margin-top: 10px" align="center">
+				        <div class="col-md-12" align="center">
+				        	<a id="bot_last_section" href="/book/section/last/${current}">上一章</a>&nbsp;&nbsp;
+				        	<a id="bot_next_section" href="/book/section/next/${current}">下一章</a>&nbsp;&nbsp;
+				        	<a id="bot_a_catalog" href="/book/catalog/${book.id}">目录</a>&nbsp;&nbsp;
+				        	<a id="bot_a_lable" href="#">加入书签</a>
+				        </div>
+				    </div>
+				    <div class="row" style="height: 40px;">
+				        <div class="col-md-12" align="center">
+				        	<a href="http://120.55.63.232/">www.fmzs365.cn</a>&nbsp;|&nbsp;<nb></nb><a href="http://120.55.63.232/">飞马追书</a><br />
+				        </div>
+				    </div>
+		        </div>
+		        <div class="col-md-2"></div>
+		    </div>
+		</div>
+	</body>
+</html>

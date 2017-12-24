@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.onearth.fmzs.dao.BookMapper">
+
+    <sql id="allField">
+      id, name, author, status, source, face_image, laster_section, laster_path, create_time, modify_time
+    </sql>
+
+    <sql id="noId">
+        id, name, author, status, source, face_image, laster_section, create_time, modify_time
+    </sql>
+
+    <select id="getBookById" parameterType="java.lang.Integer" resultType="Book">
+        SELECT * FROM  book_summary WHERE id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getBookByNamelike" resultType="Book">
+        SELECT <include refid="allField"/> FROM book_summary
+        <where>
+            name like "%#{name}%"
+        </where>
+    </select>
+
+    <select id="getAllBook" resultType="Book">
+        SELECT <include refid="allField"/> FROM book_summary
+    </select>
+
+    <insert id="saveBook" parameterType="Book" >
+        INSERT INTO book_summary (<include refid="noId"/>) VALUES (
+          #{name, jdbcType=VARCHAR}, #{author}, #{status}, #{lasterSection}, now(), now()
+        )
+    </insert>
+    
+    
+    <update id="updateBook" parameterType="Book">
+        UPDATE book_summary
+        <set>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="source != null">
+                source = #{source,jdbcType=VARCHAR},
+            </if>
+            <if test="lasterSection != null">
+                laster_section = #{lasterSection,jdbcType=VARCHAR},
+            </if>
+            <if test="lasterPath != null">
+                laster_path = #{lasterPath,jdbcType=VARCHAR},
+            </if>
+            <if test="faceImage != null">
+                face_image = #{faceImage,jdbcType=VARCHAR},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+</mapper>

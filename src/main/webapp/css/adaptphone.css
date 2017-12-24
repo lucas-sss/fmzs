@@ -1,0 +1,35 @@
+#div_bookrack_phone{
+    display: none;
+}
+
+
+
+@media screen and (max-width:1086px){
+    #index_div_search_phone{
+        display: block;
+    }
+    #index_div_search_pc{
+        display: none;
+    }
+    #div_search{
+        display: none;
+    }
+    #div_kaiguan{
+        display: none;
+    }
+    #font_section_name{
+        font-size: x-large;
+        margin-top: 5px;
+    }
+    #div_bookrack_pc{
+        display: none;
+
+    }
+    #div_bookrack_phone{
+        display: block;
+    }
+    #font_logo{
+        font-size: x-large;
+    }
+
+}

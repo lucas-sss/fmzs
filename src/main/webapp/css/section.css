@@ -1,0 +1,35 @@
+body{
+    background: white;
+  }
+  
+  .row{
+   margin: 0px;
+  }
+  
+  .div_header{
+    float: right;
+    height: 25px;
+  }
+  .div_search{
+    height: 50px;
+  }
+  .float_right{
+    float: right;
+  }
+  .float_left{
+    float: left;
+  }
+  .b_bt{
+  	height: 22px;
+  	width: 45px;
+  	background-color: goldenrod;
+  }
+  .kaideng{
+  	background-color: rgb(0,0,0);
+  }
+  .huyan{
+  	background-color: rgb(160,230,160);
+  }
+  .guandeng{
+  	background-color: rgb(255,255,255);
+  }
