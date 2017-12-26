@@ -1,7 +1,10 @@
 package cn.onearth.fmzs.controller;
 
+import cn.onearth.fmzs.Utils.common.ConstantCacheUtil;
+import cn.onearth.fmzs.Utils.common.ConstantParam;
 import cn.onearth.fmzs.model.pojo.Person;
 import cn.onearth.fmzs.service.basic.PersonService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,11 +40,18 @@ public class LoginController {
             mv.setViewName("login");
             return mv;
         }
+
         session.setAttribute("user", findOne);
         response.addCookie(new Cookie("user", String.valueOf(findOne.getId())));
-
-        mv.setViewName("redirect:/book/bookrack?user=" + findOne.getId());
         mv.addObject("person", findOne);
+        /**
+         * 处理管理员的页面
+         */
+        if (StringUtils.equals(findOne.getUserName(),ConstantCacheUtil.getValue(ConstantParam.ADMIN_NAME))){
+            /*mv.setViewName("redirect:/");
+            return mv;*/
+        }
+        mv.setViewName("redirect:/book/bookrack?user=" + findOne.getId());
         return mv;
     }
 

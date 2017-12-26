@@ -1,19 +1,12 @@
 package cn.onearth.fmzs.service.core.impl;
 
-import cn.onearth.fmzs.Utils.CacheUtil;
 import cn.onearth.fmzs.model.pojo.BookSection;
 import cn.onearth.fmzs.service.core.StaticPageService;
-import freemarker.cache.ClassTemplateLoader;
-import freemarker.cache.FileTemplateLoader;
-import freemarker.cache.MultiTemplateLoader;
-import freemarker.cache.TemplateLoader;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
-import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -22,7 +15,9 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * Created by wliu on 2017/12/14 0014.
+ *
+ *
+ * @author liuwei
  */
 @Component(value = "staticPageService")
 public class StaticPageServiceImpl implements StaticPageService, ServletContextAware{

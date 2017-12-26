@@ -1,17 +1,11 @@
 package cn.onearth.fmzs.service.core.impl;
 
-import cn.onearth.fmzs.dao.BookMapper;
-import cn.onearth.fmzs.dao.PersonMapper;
-import cn.onearth.fmzs.dao.TracerGroupMapper;
-import cn.onearth.fmzs.dao.TracerTaskMapper;
 import cn.onearth.fmzs.model.business.SectionContextDO;
 import cn.onearth.fmzs.model.business.SectionsDrawerDO;
-import cn.onearth.fmzs.model.pojo.TracerGroup;
 import cn.onearth.fmzs.model.pojo.TracerTask;
 import cn.onearth.fmzs.service.core.CoreService;
 import cn.onearth.fmzs.service.taskjob.CollectSectionTask;
 import cn.onearth.fmzs.spider.service.impl.N31xsTracerService;
-import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +15,8 @@ import java.util.TreeSet;
 import java.util.concurrent.ForkJoinPool;
 
 /**
+ *
+ *
  * Created by wliu on 2017/11/28 0028.
  */
 @Service(value = "coreService")
@@ -36,6 +32,7 @@ public class CoreServiceImpl implements CoreService {
         return false;
     }
 
+    @Override
     public List<SectionContextDO> collectNewBook(SectionsDrawerDO sectionsDrawer){
 
         TreeSet<SectionContextDO> sections = sectionsDrawer.getSections();

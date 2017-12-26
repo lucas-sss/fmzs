@@ -18,7 +18,7 @@
     <select id="getBookByNamelike" resultType="Book">
         SELECT <include refid="allField"/> FROM book_summary
         <where>
-            name like "%#{name}%"
+            name like CONCAT(CONCAT('%', #{name}), '%');
         </where>
     </select>
 

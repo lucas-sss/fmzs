@@ -1,5 +1,7 @@
 package cn.onearth.fmzs.service.basic.impl;
 
+import cn.onearth.fmzs.Utils.common.ConstantCacheUtil;
+import cn.onearth.fmzs.Utils.common.ConstantParam;
 import cn.onearth.fmzs.dao.BookMapper;
 import cn.onearth.fmzs.model.pojo.Book;
 import cn.onearth.fmzs.service.basic.BookService;
@@ -13,7 +15,7 @@ import java.util.List;
 
 /**
  * 书籍本身和用户书籍关系维护服务
- *
+ * <p>
  * Created by wliu on 2017/11/18 0018.
  */
 @Service(value = "bookService")
@@ -42,12 +44,15 @@ public class BookServiceImpl implements BookService {
     @Override
     public PageInfo<Book> getAllBookByPage(Integer pageNo, Integer pageSize) {
 
-        if (pageNo == null){
+        if (pageNo == null) {
             pageNo = 1;
         }
-        if (pageSize == null){
-            pageSize = 14;
+        if (pageSize == null) {
+            pageSize = Integer.valueOf("12");
         }
+
+        System.out.println();
+
         PageHelper.startPage(pageNo, pageSize);
         List<Book> allBook = bookMapper.getAllBook();
         PageInfo<Book> pageInfo = new PageInfo<Book>(allBook);

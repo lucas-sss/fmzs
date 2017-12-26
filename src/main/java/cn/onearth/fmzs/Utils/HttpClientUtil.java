@@ -57,20 +57,17 @@ public class HttpClientUtil {
     private static final int MAX_PER_ROUTE = 40;
 
 
-    private PoolingHttpClientConnectionManager clienPool;
+    private PoolingHttpClientConnectionManager clientPool;
 
 
     @PostConstruct
     public void init() throws Exception {
-//        SSLContextBuilder sslContextBuilder = new SSLContextBuilder();
-//        sslContextBuilder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-//        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContextBuilder.build());
         Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create().register("https", createSSLConnSocketFactory())
                 .register("http", new PlainConnectionSocketFactory())
                 .build();
-        clienPool = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-        clienPool.setMaxTotal(MAX_CONNECTION_NUM);
-        clienPool.setDefaultMaxPerRoute(MAX_PER_ROUTE);
+        clientPool = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+        clientPool.setMaxTotal(MAX_CONNECTION_NUM);
+        clientPool.setDefaultMaxPerRoute(MAX_PER_ROUTE);
     }
 
 
@@ -80,9 +77,9 @@ public class HttpClientUtil {
         }*/
         CloseableHttpClient httpClient = HttpClients.custom()
                 //.setDefaultRequestConfig(config)
-                .setConnectionManager(this.clienPool).setConnectionManagerShared(true).build();
+                .setConnectionManager(this.clientPool).setConnectionManagerShared(true).build();
         return httpClient;
-        //return custom(clienPool, 5L, Collections.<HttpRequestInterceptor>emptyList()).build();
+        //return custom(clientPool, 5L, Collections.<HttpRequestInterceptor>emptyList()).build();
     }
 
 
@@ -148,31 +145,8 @@ public class HttpClientUtil {
     private static SSLConnectionSocketFactory createSSLConnSocketFactory() {
         SSLConnectionSocketFactory sslsf = null;
         try {
-            SSLContext sslContext = new org.apache.http.conn.ssl.SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
-
-                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                    return true;
-                }
-            }).build();
-            sslsf = new SSLConnectionSocketFactory(sslContext, new X509HostnameVerifier() {
-
-                @Override
-                public boolean verify(String arg0, SSLSession arg1) {
-                    return true;
-                }
-
-                @Override
-                public void verify(String host, SSLSocket ssl) throws IOException {
-                }
-
-                @Override
-                public void verify(String host, X509Certificate cert) throws SSLException {
-                }
-
-                @Override
-                public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
-                }
-            });
+            SSLContext sslContext = SSLContext.getDefault();
+            sslsf = new SSLConnectionSocketFactory(sslContext);
         } catch (GeneralSecurityException e) {
             e.printStackTrace();
         }

@@ -1,8 +1,10 @@
 package cn.onearth.fmzs.model.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -10,7 +12,7 @@ import java.util.Date;
  */
 @Data
 @ToString
-public class Book {
+public class Book implements Serializable {
 
     private Integer id;
 
@@ -31,8 +33,10 @@ public class Book {
 
     private String rootPath;
 
+    @JsonIgnore
     private Date createTime;
 
+    @JsonIgnore
     private Date modifyTime;
 
 }

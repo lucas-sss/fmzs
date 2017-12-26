@@ -12,7 +12,7 @@ public interface BookMapper {
 
     Book getBookById(Integer id);
 
-    List<Book> getBookByNamelike(@Param(value = "name") String name);
+    List<Book> getBookByNamelike(String name);
 
     List<Book> getBookByAuthorlike(String author);
 

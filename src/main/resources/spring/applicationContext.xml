@@ -52,6 +52,10 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
 
+    <!-- 常量字典的读取监听器 -->
+    <bean class="cn.onearth.fmzs.listener.ConstantCacheListener"/>
+
+
     <!-- mapper文件扫描 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="cn.onearth.fmzs.dao" />
