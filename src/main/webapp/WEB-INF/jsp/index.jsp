@@ -26,7 +26,6 @@
     <link href="${pageContext.request.contextPath }/css/section.css" rel="stylesheet"/>
     <link href="${pageContext.request.contextPath }/css/bootstrap-theme.min.css" rel="stylesheet"/>
 
-    <%--<script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery-1.8.3.js"></script>--%>
     <script type="text/javascript" src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
     <style type="text/css">
         .op_bt{
@@ -44,17 +43,14 @@
         #table_search{
             width: 100%;
             border-radius: 10px;
-            /*border: 2px solid #92B8B1;*/
             border-collapse:collapse;
             border-spacing:1px;
         }
         table td{
             padding:5px;
-            /*border: 1px solid #92B8B1;*/
         }
         table th{
             padding:5px;
-            /*border: 1px solid #92B8B1;*/
         }
         button{
             border-radius: 5px;
@@ -67,7 +63,13 @@
             display: none;
         }
         #div_pagination{
-            position:relative;top: 15px;width: 100%;height: 25px;
+           top: 15px;width: 100%;height: 22px;align-self: center;
+        }
+        #w{
+            z-index:1000;
+            width:500px;
+            height:200px;
+            padding:1px;
         }
         @media screen and (max-width:1086px){
             #index_div_search_phone{
@@ -84,13 +86,12 @@
             }
             #div_pagination{
                 font-size: x-small;
-                position:relative;top: 15px;width: 80%;height: 25px;
-                background-color: gray;
             }
-            #index_div_bottom_web{
-                /*background-color: gray;*/
-                display: none;
-
+            #w{
+                z-index:1000;
+                width:300px;
+                height:100px;
+                padding:1px;
             }
         }
     </style>
@@ -102,9 +103,13 @@
         //查询函数
         function goSearch(){
             var bookName = $("#search_pc").val();
+            var bookNamePhone = $("#search_phone").val();
             if (bookName == null || bookName == undefined || bookName == ''){
-                $.messager.alert('Warning','请输入书名！');
-                return
+                if(bookNamePhone == null || bookNamePhone == undefined || bookNamePhone == ''){
+                    $.messager.alert('警告','请输入书名后重新搜索！');
+                    return
+                }
+                bookName = bookNamePhone;
             }
             bookName = encodeURI(bookName);
             $.get("/book/search",{"bookName":bookName},function(data){
@@ -141,19 +146,17 @@
     </script>
 </head>
 <body>
-    <div id="div_covering" class="hidden" style="position: absolute; width: 100%;height: 100%;background:#000;z-index:998;opacity:0.6;"></div>
-    <div id="w" class="easyui-window" title="搜索结果" data-options="onClose:search_window_close,iconCls:'icon-search',collapsible:false,minimizable:false,maximizable:false" style="z-index:1000;width:500px;height:200px;padding:1px;">
+    <div id="div_covering" class="hidden" style="position: absolute; width: 100%;height: 700px;background:#000;z-index:998;opacity:0.6;"></div>
+    <div id="w" class="easyui-window" title="搜索结果" data-options="onClose:search_window_close,iconCls:'icon-search',collapsible:false,minimizable:false,maximizable:false">
         <table id="table_search" align="center">
         </table>
     </div>
-
-
 
     <div id="div_body" class="container-fluid" style="display: block; z-index:100;">
         <div class="row" style="height: auto;">
             <div class="col-md-2" style="background: border-box;">
             </div>
-            <div class="col-md-8">
+            <div class="col-md-8" style=" position: relative;">
                 <div class="row">
                     <div class="col-md-4 float_left" style="height: 60px;">
                         <font size="5" class="float_left" style="font-family:LiSu,serif"><img id="img_logo" src="/img/kaideng.png" height="40" width="40"/>飞马追书</font>
@@ -229,28 +232,22 @@
                         </table>
                     </div>
                 </div>
-
-
-                <div id="index_div_bottom" class="navbar-fixed-bottom" style="z-index:50;margin-bottom: 10px" align="center">
-                    <div id="div_pagination" align="center" style="border-radius: 5px;margin-bottom: 5px">
-                        <c:forEach  items="${pagination.pageView}" var="page">
-                            ${page}
-                        </c:forEach>
-                        <%--<button>首页</button>&emsp;<a>1</a>&emsp;<a>2</a>&emsp;<a>3</a>&emsp;<button>末页</button>--%>
-                    </div>
-                    <div id="index_div_bottom_web">
-                        <div align="center" style="position:relative;top: 5px;width: 75%;height: 5px;">
-                            <hr align="center" style="width: 80% ;height:1px;border:none;border-top:1px dashed #0066CC;" />
-
-                        </div>
-                        <div align="center" style="position:relative;top: 8px;height: 20px;">
-                            <a>www.fmzs365.cn</a>&nbsp;|&nbsp;<nb></nb><a>飞马追书</a>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="col-md-2"></div>
         </div>
+    </div>
+    <div style="position: relative;margin-top: 1px;align-self: center">
+        <div id="index_div_bottom" class="navbar-fixed-bottom" style="position: relative;z-index:50;margin-bottom: 0px;align-content: center;align-self: center" align="center">
+            <div id="div_pagination" style="position: absolute;border-radius: 5px;margin-bottom: 5px;align-self: center">
+                <c:forEach  items="${pagination.pageView}" var="page">
+                    ${page}
+                </c:forEach>
+            </div>
+            <div align="center" style="position:relative;top: 50px;height: 20px;">
+                <a>www.fmzs365.cn</a>&nbsp;|&nbsp;<nb></nb><a>飞马追书</a>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>
