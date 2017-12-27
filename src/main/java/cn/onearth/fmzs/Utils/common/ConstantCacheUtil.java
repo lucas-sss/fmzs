@@ -1,9 +1,10 @@
-package cn.onearth.fmzs.Utils.common;
+package cn.onearth.fmzs.utils.common;
 
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by wliu on 2017/12/25 0025.
+ * @author wliu
  */
 public class ConstantCacheUtil {
 

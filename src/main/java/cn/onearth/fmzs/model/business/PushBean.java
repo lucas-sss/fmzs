@@ -18,6 +18,12 @@ public class PushBean {
 
     private String picLink;
 
+    /**
+     * 对应推送群
+     */
+    private String tocken;
+
+
     public PushBean() {
     }
 
@@ -29,6 +35,5 @@ public class PushBean {
 
     public PushBean(String text) {
         this.text = text;
-
     }
 }

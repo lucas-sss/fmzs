@@ -1,6 +1,6 @@
 package cn.onearth.test;
 
-import cn.onearth.fmzs.Utils.HttpClientUtil;
+import cn.onearth.fmzs.utils.HttpClientUtil;
 import cn.onearth.fmzs.model.business.PushBean;
 import cn.onearth.fmzs.service.push.impl.DDAlarmService;
 import cn.onearth.fmzs.spider.processor.SpiderProcessor;

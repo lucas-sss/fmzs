@@ -1,8 +1,7 @@
 package cn.onearth.fmzs.spider.processor;
 
-import cn.onearth.fmzs.Utils.HttpClientUtil;
-import cn.onearth.fmzs.Utils.RequestUtil;
-import cn.onearth.fmzs.spider.proxy.Proxy;
+import cn.onearth.fmzs.utils.HttpClientUtil;
+import cn.onearth.fmzs.utils.RequestUtil;
 import cn.onearth.fmzs.spider.req.Request;
 import cn.onearth.fmzs.spider.resp.Response;
 import org.apache.commons.io.IOUtils;
@@ -24,7 +23,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import us.codecraft.webmagic.utils.UrlUtils;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;

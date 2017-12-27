@@ -1,7 +1,6 @@
 package cn.onearth.test;
 
-import cn.onearth.fmzs.Utils.HttpClientUtil;
-import cn.onearth.fmzs.model.business.LatestBookInfoDO;
+import cn.onearth.fmzs.utils.HttpClientUtil;
 import cn.onearth.fmzs.model.business.SectionContextDO;
 import cn.onearth.fmzs.model.business.SectionsDrawerDO;
 import cn.onearth.fmzs.model.pojo.Book;

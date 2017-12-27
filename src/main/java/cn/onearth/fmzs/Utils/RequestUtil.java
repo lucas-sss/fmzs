@@ -1,9 +1,8 @@
-package cn.onearth.fmzs.Utils;
+package cn.onearth.fmzs.utils;
 
 import cn.onearth.fmzs.spider.req.Request;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.Header;
-import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;

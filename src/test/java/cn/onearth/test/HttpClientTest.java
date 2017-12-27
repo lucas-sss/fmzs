@@ -1,6 +1,6 @@
 package cn.onearth.test;
 
-import cn.onearth.fmzs.Utils.HttpClientUtil;
+import cn.onearth.fmzs.utils.HttpClientUtil;
 import cn.onearth.fmzs.model.business.LatestBookInfoDO;
 import cn.onearth.fmzs.model.business.SectionContextDO;
 import cn.onearth.fmzs.model.business.SectionsDrawerDO;
@@ -12,7 +12,6 @@ import cn.onearth.fmzs.spider.req.Request;
 import cn.onearth.fmzs.spider.resp.Response;
 import cn.onearth.fmzs.spider.service.impl.N31xsTracerService;
 import com.google.common.net.HttpHeaders;
-import com.sun.javadoc.Doc;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -38,7 +37,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

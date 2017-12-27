@@ -1,4 +1,4 @@
-package cn.onearth.fmzs.Utils.common;
+package cn.onearth.fmzs.utils.common;
 
 
 /**
@@ -21,4 +21,5 @@ public class ConstantParam {
     public static final String BOOK_STORAGE_PAGE_SIZE = "BOOK_STORAGE_PAGE_SIZE";
 
 
+    public static final String DING_TALK_PREFIX = "DING_TALK_PREFIX";
 }

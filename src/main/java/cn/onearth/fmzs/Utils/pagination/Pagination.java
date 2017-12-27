@@ -1,4 +1,4 @@
-package cn.onearth.fmzs.Utils.pagination;
+package cn.onearth.fmzs.utils.pagination;
 
 import java.util.ArrayList;
 import java.util.List;

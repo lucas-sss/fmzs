@@ -1,16 +1,14 @@
 package cn.onearth.fmzs.service.taskjob;
 
+import cn.onearth.fmzs.model.pojo.*;
+import cn.onearth.fmzs.service.basic.*;
+import cn.onearth.fmzs.utils.common.AlarmGroupCacheUtil;
 import cn.onearth.fmzs.model.business.PushBean;
 import cn.onearth.fmzs.model.business.SectionContextDO;
-import cn.onearth.fmzs.model.pojo.Book;
-import cn.onearth.fmzs.model.pojo.BookSection;
-import cn.onearth.fmzs.model.pojo.TracerTask;
-import cn.onearth.fmzs.service.basic.BookSectionService;
-import cn.onearth.fmzs.service.basic.BookService;
-import cn.onearth.fmzs.service.basic.TracerService;
 import cn.onearth.fmzs.service.core.StaticPageService;
 import cn.onearth.fmzs.service.push.impl.DDAlarmService;
 import cn.onearth.fmzs.spider.service.BasicTracer;
+import cn.onearth.fmzs.utils.common.RobotConfigCacheUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,11 +20,14 @@ import java.util.*;
  * 追书任务，半小时执行一次
  * <p>
  * Created by wliu on 2017/11/28 0028.
+ * @author liuwei
  */
 @Component(value = "tracerTaskJob")
 public class TracerTaskJob {
 
-    //任务集合
+    /**
+     * 任务集合
+     */
     private Set<TracerTask> syncSet = Collections.synchronizedSet(new HashSet<TracerTask>());
 
     @Autowired
@@ -44,13 +45,26 @@ public class TracerTaskJob {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private RobotConfigService robotConfigService;
+    @Autowired
+    private DDAlarmGroupService ddAlarmGroupService;
 
     @PostConstruct
     public void init() {
+        //把书籍添加到任务组
         List<TracerTask> tasks = tracerService.selectAll();
         if (tasks != null && tasks.size() > 0) {
             for (TracerTask task : tasks) {
                 this.syncSet.add(task);
+            }
+        }
+
+        //获取书籍相应的推送tocken
+        List<RobotConfig> robotConfigs = robotConfigService.getAll();
+        if (robotConfigs != null){
+            for (RobotConfig robotConfig : robotConfigs) {
+                RobotConfigCacheUtil.setValue(robotConfig.getBookId(), robotConfig.getTocken());
             }
         }
     }
@@ -123,19 +137,41 @@ public class TracerTaskJob {
                     }
 
                     /**
+                     * 推送前查询相应推送人信息
+                     */
+                    List<DDAlarmGroup> alarmGroup = AlarmGroupCacheUtil.getValue(book.getId());
+                    //从缓存中获取每本书的关联追书人
+                    if (null == alarmGroup){
+                        //缓存中为空，从数据库中查询，并添加进缓存
+                        alarmGroup = ddAlarmGroupService.getAlramGroup(book.getId());
+                        if (alarmGroup.size() > 0){
+                            for (DDAlarmGroup ddAlarmGroup : alarmGroup) {
+                                AlarmGroupCacheUtil.setValue(book.getId(),ddAlarmGroup);
+                            }
+                        }
+                    }
+
+                    /**
                      * 对数据进行更新推送
                      */
+                    String tocken = RobotConfigCacheUtil.getValue(book.getId());
+                    if (tocken == null){
+                        RobotConfig configByBook = robotConfigService.getConfigByBook(book.getId());
+                        tocken = configByBook.getTocken();
+                    }
+
                     PushBean pushBean = new PushBean();
                     pushBean.setTitle("更新：" + book.getName());
                     pushBean.setText(newSection.getSectionName());
                     String link = "http://120.55.63.232/page/" + book.getId() + "/" + insert.getSequenceSite();
-//                    pushBean.setLink(newSection.getSectionPath());
                     pushBean.setLink(link);
                     pushBean.setPicLink(book.getFaceImage());
+                    pushBean.setTocken(tocken);
                     //对每一个更新章节进行推送
                     boolean flag = ddAlarmService.shareLink(pushBean);
                     if (!flag) {
-                        //如果推送失败
+                        //如果推送失败,重复一次
+                        ddAlarmService.shareLink(pushBean);
                     }
                 }
             }

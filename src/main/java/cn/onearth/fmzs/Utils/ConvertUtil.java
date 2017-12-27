@@ -1,4 +1,4 @@
-package cn.onearth.fmzs.Utils;
+package cn.onearth.fmzs.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -1,8 +1,8 @@
 package cn.onearth.fmzs.controller;
 
-import cn.onearth.fmzs.Utils.common.ConstantCacheUtil;
-import cn.onearth.fmzs.Utils.common.ConstantParam;
-import cn.onearth.fmzs.Utils.pagination.Pagination;
+import cn.onearth.fmzs.utils.common.ConstantCacheUtil;
+import cn.onearth.fmzs.utils.common.ConstantParam;
+import cn.onearth.fmzs.utils.pagination.Pagination;
 import cn.onearth.fmzs.model.pojo.Book;
 import cn.onearth.fmzs.model.pojo.BookSection;
 import cn.onearth.fmzs.model.pojo.Bookrack;
@@ -11,7 +11,6 @@ import cn.onearth.fmzs.service.basic.BookSectionService;
 import cn.onearth.fmzs.service.basic.BookService;
 import cn.onearth.fmzs.service.basic.PersonBookrackService;
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;

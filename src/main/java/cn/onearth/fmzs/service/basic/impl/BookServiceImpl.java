@@ -1,7 +1,5 @@
 package cn.onearth.fmzs.service.basic.impl;
 
-import cn.onearth.fmzs.Utils.common.ConstantCacheUtil;
-import cn.onearth.fmzs.Utils.common.ConstantParam;
 import cn.onearth.fmzs.dao.BookMapper;
 import cn.onearth.fmzs.model.pojo.Book;
 import cn.onearth.fmzs.service.basic.BookService;

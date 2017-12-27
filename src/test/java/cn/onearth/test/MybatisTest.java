@@ -1,10 +1,7 @@
 package cn.onearth.test;
 
-import cn.onearth.fmzs.model.pojo.BookSection;
-import cn.onearth.fmzs.model.pojo.Person;
-import cn.onearth.fmzs.service.basic.BookSectionService;
-import cn.onearth.fmzs.service.basic.BookService;
-import cn.onearth.fmzs.service.basic.PersonService;
+import cn.onearth.fmzs.model.pojo.*;
+import cn.onearth.fmzs.service.basic.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +27,46 @@ public class MybatisTest {
 
     @Autowired
     BookSectionService bookSectionService;
+
+    @Autowired
+    private DDAlarmGroupService ddAlarmGroupService;
+
+    @Autowired
+    private RobotConfigService robotConfigService;
+
+    @Test
+    public void robotConfigTest(){
+
+        RobotConfig configByBook = robotConfigService.getConfigByBook(102);
+        System.out.println(configByBook);
+
+    }
+
+
+    @Test
+    public void ddalarmTest(){
+
+        List<DDAlarmGroup> list = ddAlarmGroupService.getAlramGroup(102);
+
+        if (list.size() > 0){
+            System.out.println(list.get(0).toString());
+        }
+        System.out.println("123");
+    }
+
+    @Test
+    public void bookNameLikeTest(){
+
+        List<Book> bookByNamelike = bookService.getBookByNamelike("大唐");
+        if (bookByNamelike.size() > 0){
+            System.out.println(bookByNamelike.get(0).toString());
+        }
+        System.out.println("123");
+    }
+
+
+
+
 
     @Test
     public void lastSectionTest(){

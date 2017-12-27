@@ -30,15 +30,15 @@
     <style type="text/css">
         .op_bt{
             height: 22px;
-            width: 70px;
+            width: 73px;
             background-color: goldenrod;
         }
         #table_bookstorage{
             width: 95%;
             border-radius: 20px;
-            border: 2px solid #92B8B1;
+            /*border: 2px solid #92B8B1;*/
             border-collapse:collapse;
-            border-spacing:1px;
+            /*border-spacing:1px;*/
         }
         #table_search{
             width: 100%;
@@ -198,13 +198,13 @@
                 </div>
                 <div class="row">
                     <div id="div_booklist" style="position:relative;top: 10px;width: 100%;<c:if test="${not empty size}">height:525px;</c:if>background-color:#92B8B1; border-radius: 15px">
-                        <table id="table_bookstorage" align="center" border="1" style="border-radius: 20px;">
+                        <table id="table_bookstorage" align="center" style="border-radius: 20px;">
                             <tr>
                                 <th width="250">书名</th>
                                 <th width="150">作者</th>
                                 <th width="400">最新章节</th>
                                 <th width="80">完结</th>
-                                <th style="text-align: center" width="160">操作</th>
+                                <th style="text-align: right" width="160">操作</th>
                             </tr>
                             <c:forEach var="book" items="${bookList}">
                                 <tr>
@@ -219,7 +219,7 @@
                                         <c:if test="${book.status == 0}">完本</c:if>
                                         <c:if test="${book.status == 1}">连载中</c:if>
                                     </td>
-                                    <td align="center" style=" font-size: small">
+                                    <td align="right" style=" font-size: small">
                                         <c:if test="${fn:contains(bookIds, book.id) == false}">
                                             <button id="bt_kaideng" class="op_bt">加入书架</button>&nbsp;
                                         </c:if>

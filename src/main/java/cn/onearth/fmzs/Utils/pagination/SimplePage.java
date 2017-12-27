@@ -1,4 +1,4 @@
-package cn.onearth.fmzs.Utils.pagination;
+package cn.onearth.fmzs.utils.pagination;
 
 /**
  * 简单分页类

@@ -7,6 +7,9 @@ import cn.onearth.fmzs.spider.req.Method;
 import cn.onearth.fmzs.spider.req.Request;
 import cn.onearth.fmzs.spider.resp.Response;
 import cn.onearth.fmzs.spider.service.AbstractBasicTracer;
+import cn.onearth.fmzs.spider.service.BasicTracer;
+import cn.onearth.fmzs.utils.common.ConstantCacheUtil;
+import cn.onearth.fmzs.utils.common.ConstantParam;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.net.HttpHeaders;
@@ -26,16 +29,14 @@ public class DDAlarmService implements AlarmService {
 
     private static final String DING_TALK_URL = "https://oapi.dingtalk.com/robot/send?access_token=f8acc59ccda54294690f6752a1d6256d19c013212f52b13bc937e28849d30753";
 
-    @Autowired
-    AbstractBasicTracer n31xsTracerService;
 
     @Autowired
     private SpiderProcessor processor;
 
     @Override
     public boolean noticeUser(String[] phones, PushBean pushBean) {
-
-        Request request = new Request(DING_TALK_URL, Method.post);
+        String shareUrl = ConstantCacheUtil.getValue(ConstantParam.DING_TALK_PREFIX) + pushBean.getTocken();
+        Request request = new Request(shareUrl, Method.post);
         request.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
         StringBuilder param = new StringBuilder();
@@ -60,8 +61,8 @@ public class DDAlarmService implements AlarmService {
 
     @Override
     public boolean shareLink(PushBean pushBean) {
-
-        Request request = new Request(DING_TALK_URL, Method.post);
+        String shareUrl = ConstantCacheUtil.getValue(ConstantParam.DING_TALK_PREFIX) + pushBean.getTocken();
+        Request request = new Request(shareUrl, Method.post);
         request.addHeader(HttpHeaders.CONTENT_TYPE, "application/json");
 
         StringBuilder param = new StringBuilder();

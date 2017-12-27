@@ -1,7 +1,6 @@
 package cn.onearth.fmzs.listener;
 
-import cn.onearth.fmzs.Utils.common.ConstantCacheUtil;
-import org.springframework.beans.factory.annotation.Autowired;
+import cn.onearth.fmzs.utils.common.ConstantCacheUtil;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
