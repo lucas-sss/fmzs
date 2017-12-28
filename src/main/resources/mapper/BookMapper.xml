@@ -4,7 +4,7 @@
 <mapper namespace="cn.onearth.fmzs.dao.BookMapper">
 
     <sql id="allField">
-      id, name, author, status, source, face_image, laster_section, laster_path, create_time, modify_time
+      id, name, author, status, source, root_path, face_image, laster_section, laster_path, create_time, modify_time
     </sql>
 
     <sql id="noId">

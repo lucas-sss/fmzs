@@ -48,8 +48,8 @@ public class LoginController {
          * 处理管理员的页面
          */
         if (StringUtils.equals(findOne.getUserName(),ConstantCacheUtil.getValue(ConstantParam.ADMIN_NAME))){
-            /*mv.setViewName("redirect:/");
-            return mv;*/
+            mv.setViewName("redirect:/page/console");
+            return mv;
         }
         mv.setViewName("redirect:/book/bookrack?user=" + findOne.getId());
         return mv;

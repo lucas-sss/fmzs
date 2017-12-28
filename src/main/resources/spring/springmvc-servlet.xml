@@ -34,12 +34,12 @@
 
 
     <!-- 配置自定义拦截器 -->
-    <!--<mvc:interceptors>
+    <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <bean class="cn.onearth.fmzs.interceptor.LoginInterceptor"/>
+            <bean class="cn.onearth.fmzs.interceptor.ConsoleInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>-->
+    </mvc:interceptors>
 
     <!-- 放开静态资源 -->
     <mvc:default-servlet-handler/>

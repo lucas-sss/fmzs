@@ -1,6 +1,7 @@
 package cn.onearth.fmzs.service.basic;
 
 import cn.onearth.fmzs.model.pojo.Book;
+import cn.onearth.fmzs.model.pojo.BookSourceAdd;
 import com.github.pagehelper.PageInfo;
 
 import java.util.List;
@@ -21,4 +22,10 @@ public interface BookService {
     void updateBook(Book book);
 
     PageInfo<Book> getAllBookByPage(Integer pageNo, Integer pageSize);
+
+    List<BookSourceAdd> getSourceAdds();
+
+    int deleteSourceOffer(Integer[] id);
+
+    int addSourceOffer(int[] ids);
 }
