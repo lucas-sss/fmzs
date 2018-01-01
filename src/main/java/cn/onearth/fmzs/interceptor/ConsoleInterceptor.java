@@ -20,6 +20,9 @@ public class ConsoleInterceptor implements HandlerInterceptor {
         Person person = (Person)request.getSession().getAttribute("user");
 
         if (StringUtils.contains(requestURI, "console")){
+            if (person == null){
+                return false;
+            }
             if ("admin".equals(person.getUserName())){
                 return true;
             }

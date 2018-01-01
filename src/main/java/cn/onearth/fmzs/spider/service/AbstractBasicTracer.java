@@ -112,6 +112,11 @@ public class AbstractBasicTracer implements BasicTracer {
         return null;
     }
 
+    @Override
+    public Book collectBookInfo(String bookName) {
+        return null;
+    }
+
     /**
      * 返回 157-决一死战  这种形式
      *

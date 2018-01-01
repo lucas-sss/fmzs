@@ -235,7 +235,7 @@
     </dependency>
 
     <!-- Active MQ 开始 -->
-    <dependency>
+    <!--<dependency>
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-all</artifactId>
       <version>5.8.0</version>
@@ -244,7 +244,7 @@
       <groupId>org.apache.activemq</groupId>
       <artifactId>activemq-pool</artifactId>
       <version>5.8.0</version>
-    </dependency>
+    </dependency>-->
     <!-- Active MQ 结束 -->
   </dependencies>
   <build>

@@ -40,4 +40,9 @@ public class SuperTrackerService implements BasicTracer {
     public String getBookRootPath(String bookName) {
         return null;
     }
+
+    @Override
+    public Book collectBookInfo(String bookName) {
+        return null;
+    }
 }

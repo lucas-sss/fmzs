@@ -24,5 +24,10 @@ public class TracerServiceImpl implements TracerService {
         return tracerTaskMapper.select(null);
     }
 
+    @Override
+    public int saveTracerTask(TracerTask tracerTask) {
+        return tracerTaskMapper.insert(tracerTask);
+    }
+
 
 }

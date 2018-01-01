@@ -83,11 +83,65 @@ public class N31xsTracerService extends AbstractBasicTracer {
         return null;
     }
 
+    @Override
+    public Book collectBookInfo(String bookName){
+
+        String rootPath = getBookRootPath(bookName);
+        if (null != rootPath){
+
+            Request request = createBasicRequest(rootPath);
+
+            Response response = processor.sendRequest(request, true);
+            Document document = Jsoup.parse(response.getContent());
+            Elements meta = document.select("meta");
+            Book book = new Book();
+            for (Element element : meta) {
+                String property = element.attr("property");
+                String content = element.attr("content");
+                if (StringUtils.contains(property, "og:title")){
+                    //完整书名
+                    book.setName(content);
+                } else if (StringUtils.contains(property, "og:novel:author")){
+                    //作者
+                    book.setAuthor(content);
+                }
+                if (StringUtils.contains(property, "og:novel:read_url")){
+                    //阅读路径
+                    book.setRootPath(content);
+                }else if (StringUtils.contains(property, "og:novel:status")){
+                    //完结与否
+                    if (StringUtils.contains(content, "完结")){
+                        book.setStatus("0");
+                    }else {
+                        book.setStatus("1");
+                    }
+                }else if (StringUtils.contains(property, "og:novel:latest_chapter_name")){
+                    //最新章节
+                    book.setLasterSection(convertSectionName(content));
+                }else if (StringUtils.contains(property, "og:novel:latest_chapter_url")){
+                    //最新章节地址 TODO
+
+                }else if (StringUtils.contains(property, "og:image")){
+                    //封面地址
+                    book.setFaceImage(content);
+                }
+
+            }
+
+            if (null != book.getAuthor() && null != book.getRootPath()){
+                //这里默认只要取到作者和根路径就认为抓取成功
+                return book;
+            }
+
+        }
+        return null;
+    }
+
 
     @Override
     public String getBookRootPath(String bookName) {
         Request request = createBasicRequest(N31XS_SERCH + bookName);
-        request.addHeader(HttpHeaders.REFERER, "http://www.31xs.net/");
+//        request.addHeader(HttpHeaders.REFERER, "http://www.31xs.net/");
 
         Response response = processor.sendRequest(request, true);
         Document document = Jsoup.parse(response.getContent());

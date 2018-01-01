@@ -3,6 +3,7 @@ package cn.onearth.test;
 import cn.onearth.fmzs.model.business.SectionContextDO;
 import cn.onearth.fmzs.model.business.SectionsDrawerDO;
 import cn.onearth.fmzs.model.pojo.Book;
+import cn.onearth.fmzs.spider.service.impl.N31xsTracerService;
 import cn.onearth.fmzs.spider.service.impl.NBiqugeTracerService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,43 +22,20 @@ import java.util.TreeSet;
 public class N31xsTest {
 
     @Autowired
-    private NBiqugeTracerService nBiqugeTracerService;
+    private N31xsTracerService n31xsTracerService;
 
 
     @Test
-    public void newSectionTest() {
-        String rootPath = nBiqugeTracerService.getBookRootPath("大唐风华路");
-        Book book = new Book();
-        book.setRootPath(rootPath);
-        TreeSet<SectionContextDO> newSection = nBiqugeTracerService.traceLatestSection(book);
-        for (SectionContextDO section : newSection) {
-            nBiqugeTracerService.pullSectionContext(section);
-            System.out.println(section.getSectionContext());
+    public void collectBookInfoTest(){
+        String name = "大主宰";
+        Book book = n31xsTracerService.collectBookInfo(name);
+        if (book != null){
+            System.out.println(book);
+        }else {
+            System.out.println("没有找到数据");
         }
-
     }
 
 
-    @Test
-    public void allSectionTest() {
-        String rootPath = nBiqugeTracerService.getBookRootPath("大唐风华路");
-        Book book = new Book();
-        book.setRootPath(rootPath);
-        SectionsDrawerDO allSection = nBiqugeTracerService.getAllSection(book);
-        TreeSet<SectionContextDO> sections = allSection.getSections();
-        for (SectionContextDO section : sections) {
-            System.out.println(section.getSectionName());
-        }
-
-    }
-
-    @Test
-    public void tt() {
-
-        String rootPath = nBiqugeTracerService.getBookRootPath("大唐风华路");
-        System.out.println(rootPath);
-
-
-    }
 
 }

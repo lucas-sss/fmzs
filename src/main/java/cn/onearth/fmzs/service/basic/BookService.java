@@ -28,4 +28,9 @@ public interface BookService {
     int deleteSourceOffer(Integer[] id);
 
     int addSourceOffer(int[] ids);
+
+    int addSource(BookSourceAdd bookSourceAdd);
+
+
+    BookSourceAdd getOfferSource(String name, String author);
 }

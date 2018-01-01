@@ -44,4 +44,6 @@ public interface BasicTracer {
     String getBookRootPath(String bookName);
 
 
+
+    Book collectBookInfo(String bookName);
 }

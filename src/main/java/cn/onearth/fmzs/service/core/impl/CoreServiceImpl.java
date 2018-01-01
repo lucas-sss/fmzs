@@ -23,6 +23,9 @@ import java.util.concurrent.ForkJoinPool;
 public class CoreServiceImpl implements CoreService {
 
 
+
+
+
     @Autowired
     private N31xsTracerService n31xsTracerService;
 
@@ -32,6 +35,12 @@ public class CoreServiceImpl implements CoreService {
         return false;
     }
 
+    /**
+     * 使用fockjoin进行批量抓取
+     *
+     * @param sectionsDrawer
+     * @return
+     */
     @Override
     public List<SectionContextDO> collectNewBook(SectionsDrawerDO sectionsDrawer){
 

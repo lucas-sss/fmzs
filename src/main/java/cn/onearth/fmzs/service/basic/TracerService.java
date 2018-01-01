@@ -15,4 +15,6 @@ public interface TracerService {
      * @return
      */
     List<TracerTask> selectAll();
+
+    int saveTracerTask(TracerTask tracerTask);
 }

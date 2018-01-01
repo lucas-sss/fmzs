@@ -1,22 +1,23 @@
 package cn.onearth.fmzs.controller;
 
-import cn.onearth.fmzs.utils.common.ConstantCacheUtil;
-import cn.onearth.fmzs.utils.common.ConstantParam;
-import cn.onearth.fmzs.utils.pagination.Pagination;
-import cn.onearth.fmzs.model.pojo.Book;
-import cn.onearth.fmzs.model.pojo.BookSection;
-import cn.onearth.fmzs.model.pojo.Bookrack;
-import cn.onearth.fmzs.model.pojo.Person;
+import cn.onearth.fmzs.model.pojo.*;
 import cn.onearth.fmzs.service.basic.BookSectionService;
 import cn.onearth.fmzs.service.basic.BookService;
 import cn.onearth.fmzs.service.basic.PersonBookrackService;
+import cn.onearth.fmzs.spider.service.BasicTracer;
+import cn.onearth.fmzs.utils.common.ConstantCacheUtil;
+import cn.onearth.fmzs.utils.common.ConstantParam;
+import cn.onearth.fmzs.utils.pagination.Pagination;
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,7 +35,7 @@ import java.util.List;
  * Created by wliu on 2017/12/8 0008.
  */
 @Controller
-@RequestMapping(value = "book")
+@RequestMapping(value = "/book")
 public class BookController {
 
     @Autowired
@@ -46,28 +47,74 @@ public class BookController {
     @Autowired
     private PersonBookrackService personBookrackService;
 
+    @Autowired
+    @Qualifier(value = "n31xsTracerService")
+    private BasicTracer basicTracer;
+
+
+    @RequestMapping(value = "/offerBook")
+    @ResponseBody
+    public void offerBook(@RequestBody Book book, HttpServletResponse response)throws IOException{
+        JSONObject jsonObject = new JSONObject();
+        response.setContentType("application/json;charset=UTF-8");
+        if (book.getRootPath() != null && book.getAuthor() != null){
+
+            BookSourceAdd offerSource = bookService.getOfferSource(book.getName(), book.getAuthor());
+            if (offerSource != null){
+                //已经推荐过该书
+                jsonObject.put("code","1");
+            }else {
+                BookSourceAdd bookSourceAdd = new BookSourceAdd();
+                bookSourceAdd.setName(book.getName());
+                bookSourceAdd.setAuthor(book.getAuthor());
+                bookSourceAdd.setRootSource(book.getRootPath());
+                bookSourceAdd.setStatus(Integer.valueOf(book.getStatus()));
+                bookService.addSource(bookSourceAdd);
+                jsonObject.put("code","0");
+            }
+        }else {
+            jsonObject.put("code","4");
+        }
+        response.getWriter().write(jsonObject.toJSONString());
+    }
 
     @RequestMapping(value = "/search")
     @ResponseBody
     public void search(String bookName, HttpServletResponse response) throws IOException {
         if (bookName == null) {
-            System.out.println("----------------");
+            System.out.println("搜索书名为空----------------");
         }
         try {
             bookName = URLDecoder.decode(bookName, "utf-8");
         } catch (UnsupportedEncodingException e) {
             //TODO
         }
-        System.out.println(bookName);
+        response.setContentType("application/json;charset=UTF-8");
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
         /**
          * 这里只进行完全匹配,后期会进行solr全文模糊检索
          */
         List<Book> list = bookService.getBookByNamelike(bookName);
 
-
-        response.setContentType("application/json;charset=UTF-8");
-        JSONArray jsonArray = new JSONArray(new ArrayList<>(list));
-        response.getWriter().write(jsonArray.toJSONString());
+        if (list.size() == 0) {
+            //本地数据库没有查询到数据，进行在线搜索
+            Book book = basicTracer.collectBookInfo(bookName);
+            if (book != null){
+                //在线查询有结果
+                jsonObject.put("code","1");
+                list.add(book);
+            }else {
+                //在线查询无结果
+                jsonObject.put("code","4");
+            }
+        }else {
+            //本地查询有结果
+            jsonObject.put("code","0");
+        }
+        jsonArray.addAll(list);
+        jsonObject.put("list",jsonArray);
+        response.getWriter().write(jsonObject.toJSONString());
     }
 
 
@@ -80,14 +127,6 @@ public class BookController {
      */
     @RequestMapping(value = "/bookrack")
     public String bookrack(String user, Model model, HttpServletRequest request) {
-
-        /*if (StringUtils.isEmpty(user)) {
-            return "redirect:/page/login";
-        }
-        if (!user.matches("\\d+")) {
-
-        }
-        int userId = Integer.valueOf(user);*/
 
         Person person = (Person) request.getSession().getAttribute("user");
         if (null == person || person.getId() == null) {
@@ -231,26 +270,6 @@ public class BookController {
          * 下一步转向操作错误页面
          */
         return "redirect:/";
-    }
-
-
-    /**
-     * 章节目录
-     *
-     * @param model
-     * @param bookid
-     * @return
-     */
-    @RequestMapping(value = "/sectionList/{bookid}")
-    public String sectionList(Model model, @PathVariable("bookid") String bookid) {
-
-        return "index";
-    }
-
-    @RequestMapping(value = "/markSite/{sectionid}")
-    public String markSite(Model model, @PathVariable("sectionid") String sectionid) {
-
-        return "index";
     }
 
 }

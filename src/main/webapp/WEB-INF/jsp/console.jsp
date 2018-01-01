@@ -222,15 +222,27 @@
         },{
             field : 'name',
             title : '书籍名称',
-            width : 220,
+            width : 200,
             align : 'center',
             formatter : function(data,row, index){
                 return "<a href='"+ row.rootSource +"' target='_blank'>" + data + "</a>"
             }
         }, {
+            field : 'status',
+            title : '状态',
+            width : 70,
+            align : 'center',
+            formatter : function(data,row, index){
+                if(data=="1"){
+                    return "连载中";
+                }else{
+                    return "已完结";
+                }
+            }
+        }, {
             field : 'author',
             title : '作者',
-            width : 150,
+            width : 100,
             align : 'center'
         }, {
             field : 'rootSource',
