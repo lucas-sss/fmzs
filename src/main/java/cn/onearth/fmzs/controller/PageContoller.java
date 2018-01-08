@@ -2,6 +2,7 @@ package cn.onearth.fmzs.controller;
 
 import cn.onearth.fmzs.model.pojo.Person;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +18,11 @@ import java.util.concurrent.ConcurrentHashMap;
 @Controller
 @RequestMapping("/")
 public class PageContoller {
+	static final Logger LOGGER = Logger.getLogger(PageContoller.class);
 
 	@RequestMapping("/")
 	public ModelAndView rootPath(){
+		LOGGER.info("------------------请求首页了-------------------------");
 		return new ModelAndView("forward:/book/bookstorage");
 	}
 	

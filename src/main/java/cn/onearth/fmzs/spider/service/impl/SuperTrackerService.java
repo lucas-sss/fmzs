@@ -18,6 +18,9 @@ import java.util.TreeSet;
 public class SuperTrackerService implements BasicTracer {
     @Override
     public LatestBookInfoDO traceLatestBookInfo(SpiderProcessor processor, String bookName) {
+
+
+
         return null;
     }
 

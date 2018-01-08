@@ -17,6 +17,8 @@
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <mvc:annotation-driven/>
+    <!-- 启动对@AspectJ注解的支持 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <context:component-scan base-package="cn.onearth"/>
     <bean id="htmlViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">

@@ -1,5 +1,6 @@
 package cn.onearth.fmzs.spider.service.impl;
 
+import cn.onearth.fmzs.log.annotation.SystemServiceLog;
 import cn.onearth.fmzs.model.business.LatestBookInfoDO;
 import cn.onearth.fmzs.model.business.SectionContextDO;
 import cn.onearth.fmzs.model.business.SectionsDrawerDO;
@@ -83,15 +84,18 @@ public class N31xsTracerService extends AbstractBasicTracer {
         return null;
     }
 
+    @SystemServiceLog(description = "31xs在线查询书籍")
     @Override
     public Book collectBookInfo(String bookName){
+
+        int a = 1/0;
 
         String rootPath = getBookRootPath(bookName);
         if (null != rootPath){
 
             Request request = createBasicRequest(rootPath);
-
             Response response = processor.sendRequest(request, true);
+            assembleResponse(response, bookName);
             Document document = Jsoup.parse(response.getContent());
             Elements meta = document.select("meta");
             Book book = new Book();

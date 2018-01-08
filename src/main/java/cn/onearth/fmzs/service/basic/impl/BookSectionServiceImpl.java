@@ -1,6 +1,8 @@
 package cn.onearth.fmzs.service.basic.impl;
 
+import cn.onearth.fmzs.aspecttest.SysServiceLog;
 import cn.onearth.fmzs.dao.BookSectionMapper;
+import cn.onearth.fmzs.log.annotation.SystemServiceLog;
 import cn.onearth.fmzs.model.pojo.BookSection;
 import cn.onearth.fmzs.service.basic.BookSectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,7 @@ class BookSectionServiceImpl implements BookSectionService {
         return bookSectionMapper.getBookSectionById(id);
     }
 
+    @SystemServiceLog
     @Override
     public List<BookSection> getAllSectionByBook(Integer bookId) {
         return bookSectionMapper.getAllSectionByBook(bookId);

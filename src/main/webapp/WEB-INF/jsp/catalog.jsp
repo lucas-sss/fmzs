@@ -45,6 +45,9 @@
             #catalog_div_search{
                 display: none;
             }
+            #bottom_logo{
+                display: none;
+            }
         }
     </style>
     <script>
@@ -127,7 +130,7 @@
 
                 </div>
             </div>
-            <div class="navbar-fixed-bottom" style="margin-bottom: 10px">
+            <div id="bottom_logo" class="navbar-fixed-bottom" style="margin-bottom: 10px">
                 <div align="center" style="position:relative;bottom: 5px;height: 20px;">
                     <a>www.fmzs365.cn</a>&nbsp;|&nbsp;
                     <nb></nb>

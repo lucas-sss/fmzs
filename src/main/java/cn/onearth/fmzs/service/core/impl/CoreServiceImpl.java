@@ -7,6 +7,7 @@ import cn.onearth.fmzs.service.core.CoreService;
 import cn.onearth.fmzs.service.taskjob.CollectSectionTask;
 import cn.onearth.fmzs.spider.service.impl.N31xsTracerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,13 +22,6 @@ import java.util.concurrent.ForkJoinPool;
  */
 @Service(value = "coreService")
 public class CoreServiceImpl implements CoreService {
-
-
-
-
-
-    @Autowired
-    private N31xsTracerService n31xsTracerService;
 
 
     @Override
@@ -55,7 +49,7 @@ public class CoreServiceImpl implements CoreService {
             n31xsTracerService.pullSectionContext(sectionContextDO);
         }
         return list;*/
-        CollectSectionTask task = new CollectSectionTask(list, n31xsTracerService);
+        CollectSectionTask task = new CollectSectionTask(list, null);
 
         ForkJoinPool pool = new ForkJoinPool();
         pool.submit(task);

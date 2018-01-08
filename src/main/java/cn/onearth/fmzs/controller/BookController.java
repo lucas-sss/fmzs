@@ -102,6 +102,7 @@ public class BookController {
             Book book = basicTracer.collectBookInfo(bookName);
             if (book != null){
                 //在线查询有结果
+                System.out.println(book);
                 jsonObject.put("code","1");
                 list.add(book);
             }else {
@@ -114,6 +115,7 @@ public class BookController {
         }
         jsonArray.addAll(list);
         jsonObject.put("list",jsonArray);
+        System.out.println("--------------searchResult-------------" + jsonObject.toJSONString());
         response.getWriter().write(jsonObject.toJSONString());
     }
 

@@ -135,10 +135,10 @@
                             msg: '您已经成功推荐该书源',
                             timeout: 1000,
                             showType: 'slide',
-                            style:{
-                                right:'',
-                                top:document.body.scrollTop+document.documentElement.scrollTop,
-                                bottom:''
+                            style: {
+                                right: '',
+                                top: document.body.scrollTop + document.documentElement.scrollTop,
+                                bottom: ''
                             }
                         });
                         return
