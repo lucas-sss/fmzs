@@ -19,7 +19,7 @@
        http://www.springframework.org/schema/task/spring-task.xsd">
 
     <context:component-scan base-package="cn.onearth.fmzs"/>
-
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
     <context:property-placeholder location="classpath:jdbc.properties"/>
 
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
@@ -61,5 +61,19 @@
         <!-- 阅读位置的处理 -->
         <task:scheduled ref="remberReadSiteTaskJob" method="recordReadsite" cron="0 */5 * * * ?"/>
     </task:scheduled-tasks>
+
+
+
+    <!--<bean id="myXmlAspect" class="cn.onearth.fmzs.aspecttest.MyXmlAspect"/>
+    &lt;!&ndash; execution(* cn.onearth.fmzs.aspecttest.ConsumeService(*)) &ndash;&gt;
+    <aop:config >
+        <aop:pointcut id="myPointcut" expression="bean(*Service)"/>
+        <aop:aspect ref="myXmlAspect">
+            <aop:before method="firstBefore" pointcut-ref="myPointcut"/>
+        </aop:aspect>
+    </aop:config>-->
+
+
+
 
 </beans>

@@ -1,5 +1,8 @@
 package cn.onearth.fmzs.service.basic.impl;
 
+import cn.onearth.fmzs.aop.BizTypeEnum;
+import cn.onearth.fmzs.aop.OpTypeEnum;
+import cn.onearth.fmzs.aop.SendSmsNotice;
 import cn.onearth.fmzs.aspecttest.SysServiceLog;
 import cn.onearth.fmzs.dao.BookSectionMapper;
 import cn.onearth.fmzs.log.annotation.SystemServiceLog;
@@ -55,6 +58,7 @@ class BookSectionServiceImpl implements BookSectionService {
     }
 
     @Override
+    @SendSmsNotice(bizType = BizTypeEnum.AUDIT_ENT, opType = OpTypeEnum.AUDIT_SUCCESS)
     public Integer saveBookSection(BookSection bookSection) {
         Integer id = bookSectionMapper.saveBookSection(bookSection);
         return id;

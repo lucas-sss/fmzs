@@ -7,12 +7,14 @@ import org.springframework.stereotype.Service;
  * @version 1.0
  * @date 2018/1/3 0003
  */
-@Service("consumeService")
+@Service(value = "consumeService")
 public class ConsumeServiceImpl implements ConsumeService {
 
-    @SysServiceLog
+
     @Override
+    @SysServiceLog
     public void save() {
+
         System.out.println("进入保存了");
     }
 }
