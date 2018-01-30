@@ -30,6 +30,7 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.impl.execchain.ClientExecChain;
 import org.apache.http.protocol.*;
 import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -39,6 +40,8 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Collections;
@@ -65,7 +68,7 @@ public class HttpClientUtil {
 //        SSLContextBuilder sslContextBuilder = new SSLContextBuilder();
 //        sslContextBuilder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
 //        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContextBuilder.build());
-        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create().register("https", createSSLConnSocketFactory())
+        Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder.<ConnectionSocketFactory>create().register("https", newSSLConnSocketFactory())
                 .register("http", new PlainConnectionSocketFactory())
                 .build();
         clienPool = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
@@ -145,37 +148,13 @@ public class HttpClientUtil {
     }
 
 
-    private static SSLConnectionSocketFactory createSSLConnSocketFactory() {
-        SSLConnectionSocketFactory sslsf = null;
-        try {
-            SSLContext sslContext = new org.apache.http.conn.ssl.SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
 
-                public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-                    return true;
-                }
-            }).build();
-            sslsf = new SSLConnectionSocketFactory(sslContext, new X509HostnameVerifier() {
+    private static SSLConnectionSocketFactory newSSLConnSocketFactory() throws Exception {
 
-                @Override
-                public boolean verify(String arg0, SSLSession arg1) {
-                    return true;
-                }
+        SSLContext sslContext = SSLContexts.custom().loadTrustMaterial(null, (chain, authType) -> true).build();
 
-                @Override
-                public void verify(String host, SSLSocket ssl) throws IOException {
-                }
+        SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext, SSLConnectionSocketFactory.getDefaultHostnameVerifier());
 
-                @Override
-                public void verify(String host, X509Certificate cert) throws SSLException {
-                }
-
-                @Override
-                public void verify(String host, String[] cns, String[] subjectAlts) throws SSLException {
-                }
-            });
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        }
         return sslsf;
     }
 

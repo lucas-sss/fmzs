@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.onearth.fmzs.dao.BookSectionMapper">
+
+    <sql id="allField">
+        id, book_id, section_name, section_path, sequence_site, prev_section_id, next_section_id, section_content, create_time, modify_time
+    </sql>
+
+    <sql id="noId">
+        book_id, section_name, section_path, sequence_site, prev_section_id, next_section_id, section_content, create_time, modify_time
+    </sql>
+
+    <select id="getBookSectionById" parameterType="java.lang.Integer" resultType="BookSection">
+        SELECT <include refid="allField"/>  from book_section_detail
+        <where>
+            id = #{id,jdbcType=BIGINT}
+        </where>
+    </select>
+
+    <select id="getAllSectionByBook" parameterType="java.lang.Integer" resultType="BookSection">
+        SELECT id, book_id, section_name, section_path, sequence_site from book_section_detail
+        <where>
+            book_id = #{bookId,jdbcType=BIGINT}
+        </where>
+    </select>
+
+    <select id="getBookSectionByBookAndSite" parameterType="java.lang.Integer" resultType="BookSection">
+        SELECT <include refid="allField"/> from book_section_detail
+        <where>
+            book_id = #{bookId,jdbcType=BIGINT} AND sequence_site = #{site,jdbcType=BIGINT}
+        </where>
+    </select>
+
+
+    <select id="getLocalLatestSection" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT MAX(sequence_site) from book_section_detail
+        <where>
+            book_id = #{bookId,jdbcType=BIGINT}
+        </where>
+    </select>
+
+
+    <insert id="saveBookSection" keyProperty="id" useGeneratedKeys="true" parameterType="BookSection">
+        INSERT INTO book_section_detail (<include refid="noId"/>) VALUES (
+          #{bookId, jdbcType=INTEGER},#{sectionName, jdbcType=VARCHAR},#{sectionPath, jdbcType=VARCHAR},
+          #{sequenceSite},#{prevSectionId},#{nextSectionId},#{sectionContent},now(),now())
+    </insert>
+
+    <update id="updateSectionById" parameterType="BookSection">
+        UPDATE book_section_detail
+        <set>
+            <if test="bookId != null">
+                book_id = #{bookId,jdbcType=BIGINT},
+            </if>
+            <if test="sectionName != null">
+                section_name = #{sectionName,jdbcType=VARCHAR},
+            </if>
+            <if test="sectionPath != null">
+                section_path = #{sectionPath,jdbcType=VARCHAR},
+            </if>
+            <if test="sequenceSite != null">
+                sequence_site = #{sequenceSite,jdbcType=BIGINT},
+            </if>
+            <if test="prevSectionId != null">
+                prev_section_id = #{prevSectionId,jdbcType=BIGINT},
+            </if>
+            <if test="nextSectionId != null">
+                next_section_id = #{nextSectionId,jdbcType=BIGINT},
+            </if>
+            <if test="localPath != null">
+                local_path = #{localPath,jdbcType=VARCHAR},
+            </if>
+            <if test="sectionContent != null">
+                section_content = #{sectionContent,jdbcType=VARCHAR},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+    <update id="updateLocalPath" parameterType="BookSection">
+        UPDATE book_section_detail
+        <set>
+            <if test="localPath != null">
+                local_path = #{localPath,jdbcType=VARCHAR},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+</mapper>

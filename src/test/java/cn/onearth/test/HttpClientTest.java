@@ -259,8 +259,8 @@ public class HttpClientTest {
         Request request = new Request(url, Method.get);
 
         HttpGet httpGet = new HttpGet(url);
-        RequestConfig.Builder config = RequestConfig.custom();
-        httpGet.setConfig(config.setProxy(new HttpHost("127.0.0.1", 8088)).build());
+//        RequestConfig.Builder config = RequestConfig.custom();
+//        httpGet.setConfig(config.setProxy(new HttpHost("127.0.0.1", 8088)).build());
 
 
         InputStream inputStream = null;

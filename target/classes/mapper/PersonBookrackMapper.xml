@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="cn.onearth.fmzs.dao.PersonBookrackMapper">
+
+    <sql id="allField">
+      id, user_id, book_id, read_progress, read_path, tracer_status, create_time, modify_time
+    </sql>
+
+    <sql id="noId">
+      user_id, book_id, read_progress, read_path, tracer_status, create_time, modify_time
+    </sql>
+
+    <select id="getBookrack" parameterType="java.lang.Integer" resultType="Bookrack">
+        SELECT <include refid="allField"/> FROM  person_bookrack WHERE user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+
+    <select id="getBookrackByUserAndBook" parameterType="java.lang.Integer" resultType="Bookrack">
+        SELECT <include refid="allField"/> FROM  person_bookrack WHERE user_id = #{userId,jdbcType=BIGINT} AND book_id = #{bookId,jdbcType=BIGINT}
+    </select>
+
+
+    <insert id="addBookrack" parameterType="Bookrack" >
+        INSERT INTO person_bookrack (<include refid="noId"/>) VALUES (
+          #{userId, jdbcType=BIGINT}, #{bookId, jdbcType=BIGINT}, #{readProgress,jdbcType=VARCHAR}, #{readpath,jdbcType=VARCHAR}, #{tracerStatus,jdbcType=VARCHAR}, now(), now()
+        )
+    </insert>
+    
+    
+    <update id="updateBookrack" parameterType="Bookrack">
+        UPDATE person_bookrack
+        <set>
+            <if test="userId != null">
+                user_id = #{userId,jdbcType=BIGINT},
+            </if>
+            <if test="bookId != null">
+                book_id = #{bookId,jdbcType=BIGINT},
+            </if>
+            <if test="readProgress != null">
+                read_progress = #{readProgress,jdbcType=VARCHAR},
+            </if>
+            <if test="readPath != null">
+                read_path = #{readPath,jdbcType=VARCHAR},
+            </if>
+            <if test="tracerStatus != null">
+                tracer_status = #{tracerStatus,jdbcType=VARCHAR},
+            </if>
+            modify_time = now()
+        </set>
+        where id = #{id, jdbcType=BIGINT}
+    </update>
+
+</mapper>
